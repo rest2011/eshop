@@ -20,7 +20,7 @@ json5==0.9.14
 mixer==7.1.2
 packaging==23.1
 pathspec==0.11.1
-Pillow==9.2.0
+Pillow==10.1.0
 pluggy==0.13.1
 py==1.11.0
 pytest==6.2.4
@@ -30,7 +30,7 @@ python-dateutil==2.8.2
 pytils==0.4.1
 pytz==2023.3
 PyYAML==6.0.1
-regex==2023.6.3
+regex==2023.10.3
 requests==2.26.0
 six==1.16.0
 sorl-thumbnail==12.7.0
