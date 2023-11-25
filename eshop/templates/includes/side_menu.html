@@ -1,0 +1,8 @@
+{% comment %} {% load cache %} {% endcomment %}
+<div class="nav flex-column nav-pills border" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+    {% comment %} {% cache 300 side_menu_cache %}  {# Кэшируем на 5 минут (300 секунд) #} {% endcomment %}
+    {% for group in groups %}
+    <a href="{% url 'posts:group_list' group.get_full_path %}" class="nav-link link-opacity-90 nav-underline" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="false">{{ group.title }}</a>
+    {% endfor %}
+    {% comment %} {% endcache %} {% endcomment %}
+</div>

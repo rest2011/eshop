@@ -1,0 +1,14 @@
+{% load thumbnail %}
+<article class='border p-2' style='height: 100%;'>
+  {% thumbnail post.image "200x200" as im %}
+    <div style="height: 175px;">
+      <a href="{% url 'posts:post_detail' post.group.get_ancestors_slugs post.slug %}">
+        <img style="width: 100%;" src="{{ im.url }}">
+      </a>
+    </div>
+  {% endthumbnail %}
+  <div style='height: 50px; overflow: hidden;'>
+    <a href="{% url 'posts:post_detail' post.group.get_ancestors_slugs post.slug %}">{{ post.text|linebreaksbr }}</a>
+  </div>
+  <h4>{{ post.price }} Р.</h4>
+</article>

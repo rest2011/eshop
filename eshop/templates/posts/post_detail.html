@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load user_filters %}
+{% block title %}{{ post.text|slice:"0:100" }}{% endblock %}
+{% block content %}
+  <div class="row">
+    <article class="col-12 col-md-9">
+      <h2>{{ post.title|linebreaksbr }}</h2>
+      {% thumbnail post.image "600x400" as im %}
+        <div class="image-container text-center">
+          <img class="card-img my-2"
+               src="{{ im.url }}"
+               style="width: auto;
+                      max-height: 300px"
+               alt="{{ post.title }}">
+        </div>
+      {% endthumbnail %}
+      <br>
+      <p>{{ post.text|linebreaksbr }}</p>
+      {% if post.author == user %}
+        <a class="btn btn-primary" href="{% url 'posts:post_edit' post.slug %}">редактировать пост</a>
+      {% endif %}
+      <div class='col-12'>
+        <br>
+        <br>
+        <h5>Характеристики:</h5>
+        <table class="table table-stripe">
+          <tbody>
+            <tr>
+              <td>Бренд</td>
+              <td>{{ post.brand }}</td>
+            </tr>
+            <tr>
+              <td>Цвет</td>
+              <td>{{ post.color }}</td>
+            </tr>
+            {% for spec, value in PRODUCT_SPECS.items %}
+              {% if post|attr:spec %}
+                <tr>
+                  <td>{{ value }}</td>
+                  <td>{{ post|attr:spec }}</td>
+                </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </article>
+  <aside class="col-12 col-md-3">
+    <ul class="list-group list-group-flush">
+      {% if post.group %}
+        <li class="list-group-item">
+          Категория:
+          <a href="{% url 'posts:group_list' post.group.get_ancestors_slugs %}">{{ post.group.title }}</a>
+        </li>
+      {% endif %}
+      <li class="list-group-item">
+        <h3>{{ post.price }} Р.</h3>
+      </li>
+    </ul>
+  </aside>
+</div>
+{% endblock %}

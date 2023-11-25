@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Последние обновления на сайте{% endblock %}
+{% block content %}
+  {% comment %} {% include 'posts/includes/switcher.html' with index=True %} {% endcomment %}
+  <h1>Последние поступления</h1>
+  {% comment %} {% load cache %} {% endcomment %}
+  {% comment %} {% cache 20 index_page page_obj.number %} {% endcomment %}
+
+    <div class="row">
+      {% for post in page_obj %}
+        <div class='col-3 mb-3'>{% include 'posts/includes/post.html' %}</div>
+        {% comment %} {% if not forloop.last %}<hr />{% endif %} {% endcomment %}
+      {% endfor %}
+    </div>
+
+{% comment %} {% endcache %} {% endcomment %}
+{% include 'posts/includes/paginator.html' %}
+{% endblock %}

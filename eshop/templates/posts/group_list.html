@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Записи группы "{{ group.title }}"{% endblock %}
+{% block content %}
+  <h1>{{ group.title }}</h1>
+  <p>{{ group.description|linebreaksbr }}</p>
+  {% if post.author == user %}
+    <a class="btn btn-primary"
+       href="{% url 'posts:group_edit' group.slug %}">редактировать категорию</a>
+  {% endif %}
+
+  {% comment %} <nav class="nav nav-tabs">
+    {% for subcategory in group.subcategories.all %}
+      <a href="{% url 'posts:group_list' subcategory.get_full_path %}"
+         class="btn">{{ subcategory.title }}</a>&nbsp;
+    {% endfor %}
+  </nav>   {% endcomment %}
+  <ul class="nav nav-underline">
+    {% for subcategory in group.subcategories.all %}
+    <li class="nav-item">
+      <a class="nav-link" aria-current="page" href="{% url 'posts:group_list' subcategory.get_full_path %}">{{ subcategory.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="row">
+    {% for post in page_obj %}
+      <div class='col-3 mb-3'>{% include 'posts/includes/post.html' with hide_group=True %}</div>
+    {% endfor %}
+    {% comment %} {% load user_filters %}
+    {% for subcategory in group|recursive_subcategories %}
+      {% for post in subcategory.posts.all %}
+        <div class='col-3 mb-3'>{% include 'posts/includes/post.html' with hide_group=True %}</div>
+      {% endfor %}
+    {% endfor %} {% endcomment %}
+  </div>
+  {% include 'posts/includes/paginator.html' %}
+{% endblock %}
